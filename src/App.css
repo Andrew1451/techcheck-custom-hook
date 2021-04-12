@@ -13,7 +13,16 @@
   }
 }
 
-.App-header {
+p {
+  color: 'lime'
+}
+
+button {
+  position: absolute;
+  top: 398px;
+}
+
+.App {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;

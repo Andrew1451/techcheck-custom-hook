@@ -1,23 +1,34 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
 
 function App() {
+  const [quote, setQuote] = useState(null);
+  const [loading, setLoading] = useState(null);
+  const [error, setError] = useState(null);
+
+  const fetchQuote = () => {
+    setQuote(null)
+    setLoading('loading...')
+    setTimeout(() => {
+      fetch('https://api.quotable.io/random')
+      .then(res => res.json())
+      .then(res => {
+        setLoading(false)
+        setQuote(res.content)
+      })
+      .catch(err => {
+        setLoading(false)
+        setError('An error occured. Awkward..')
+      })
+    }, 1000)
+  }
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button onClick={fetchQuote}>Fetch Quote</button>
+      { loading && <p>{loading}</p> }
+      { quote && <p>"{quote}"</p> }
+      { error && <p>{error}</p> }
     </div>
   );
 }
